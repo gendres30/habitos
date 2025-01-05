@@ -1,0 +1,22 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+<div class="container mt-5 text-center">
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h2>Eliminar Registro</h2>
+        </div>
+        <div class="card-body">
+            <p>¿Estás seguro de que deseas eliminar el registro del hábito <strong>{{ registro.habito.nombre }}</strong> del día <strong>{{ registro.fecha }}</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, eliminar
+                </button>
+                <a href="{% url 'listar_registros' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

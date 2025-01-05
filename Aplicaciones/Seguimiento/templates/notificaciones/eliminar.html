@@ -1,0 +1,22 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+<div class="container mt-5 text-center">
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h2>Eliminar Notificación</h2>
+        </div>
+        <div class="card-body">
+            <p>¿Estás seguro de que deseas eliminar la notificación para el hábito <strong>{{ notificacion.habito.nombre }}</strong> a las <strong>{{ notificacion.hora }}</strong> con frecuencia <strong>{{ notificacion.frecuencia }}</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, eliminar
+                </button>
+                <a href="{% url 'listar_notificaciones' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

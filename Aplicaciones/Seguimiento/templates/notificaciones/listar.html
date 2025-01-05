@@ -1,0 +1,48 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Lista de Notificaciones</h1>
+        <a href="{% url 'crear_notificacion' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nueva Notificación
+        </a>
+    </div>
+
+    {% if notificaciones %}
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre del hábito</th>
+                    <th>Hora</th>
+                    <th>Frecuencia</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notificacion in notificaciones %}
+                <tr>
+                    
+                    <td>{{ notificacion.habito.nombre }}</td>
+                    <td>{{ notificacion.hora }}</td>
+                    <td>{{ notificacion.frecuencia }}</td>
+                    <td>
+                        <a href="{% url 'editar_notificacion' notificacion.id %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'eliminar_notificacion' notificacion.id %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            No hay notificaciones disponibles. <a href="{% url 'crear_notificacion' %}">Crea la primera aquí</a>.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

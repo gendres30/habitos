@@ -1,0 +1,77 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+<div class="container mt-5">
+    <!-- Resumen de Hábitos -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Resumen de Hábitos</h2>
+        </div>
+        <div class="card-body">
+            {% if resumen_habitos %}
+                <div class="row">
+                    {% for habito in resumen_habitos %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-info">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-primary">{{ habito.nombre }}</h5>
+                                <p class="card-text">
+                                    Tipo: <strong>{{ habito.tipo }}</strong><br>
+                                    Meta diaria: <strong>{{ habito.meta_diaria }} horas</strong><br>
+                                    Progreso: <strong>{{ habito.progreso_total }}%</strong>
+                                </p>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                         style="width: {{ habito.progreso_total }}%;" aria-valuenow="{{ habito.progreso_total }}"
+                                         aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    No hay hábitos registrados aún. <a href="{% url 'crear_habito' %}">¡Crea uno ahora!</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Historial de Progreso -->
+    <div class="card shadow">
+        <div class="card-header bg-secondary text-white">
+            <h2 class="mb-0">Historial de Progreso</h2>
+        </div>
+        <div class="card-body">
+            {% if historial %}
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Hábito</th>
+                            <th>Tipo</th>
+                            <th>Fecha</th>
+                            <th>Cantidad Completada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in historial %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ registro.habito.nombre }}</td>
+                            <td>{{ registro.habito.tipo }}</td>
+                            <td>{{ registro.fecha }}</td>
+                            <td>{{ registro.cantidad_completada }} horas</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info text-center">
+                    No hay registros de progreso. <a href="{% url 'crear_registro' %}">Añade tu primer registro</a>.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

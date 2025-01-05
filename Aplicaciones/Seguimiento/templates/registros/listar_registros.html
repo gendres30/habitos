@@ -1,0 +1,48 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Lista de Registros</h1>
+        <a href="{% url 'crear_registro' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Registro
+        </a>
+    </div>
+
+    {% if registros %}
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Historial</th>
+                    <th>Hábito</th>
+                    <th>Fecha</th>
+                    <th>Progreso (horas)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registros %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ registro.habito.nombre }}</td>
+                    <td>{{ registro.fecha }}</td>
+                    <td>{{ registro.cantidad_completada }}</td>
+                    <td>
+                        <a href="{% url 'editar_registro' registro.id %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'eliminar_registro' registro.id %}" class="btn btn-danger btn-sm" >
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            No hay registros disponibles. <a href="{% url 'crear_registro' %}">Crea el primero aquí</a>.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

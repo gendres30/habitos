@@ -1,0 +1,49 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Lista de Hábitos</h1>
+        <a href="{% url 'crear_habito' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Hábito
+        </a>
+    </div>
+
+    {% if habitos %}
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Meta diaria (horas)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for habito in habitos %}
+                <tr>
+                    <td>{{ habito.tipo }}</td>
+                    <td>{{ habito.nombre }}</td>
+                    <td>{{ habito.descripcion }}</td>
+                    <td>{{ habito.meta_diaria }}</td>
+                    <td>
+                        <a href="{% url 'editar_habito' habito.id %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'eliminar_habito' habito.id %}" class="btn btn-danger btn-sm" 
+                           >
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            No hay hábitos registrados. <a href="{% url 'crear_habito' %}">Crea el primero aquí</a>.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
